@@ -12,7 +12,8 @@ export @artifact,
     @invoke_with,
     @callback_provider,
     @switch_provider,
-    substitute
+    substitute,
+    visualize
 
 import Base
 using Match

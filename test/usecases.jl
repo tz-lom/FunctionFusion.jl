@@ -69,7 +69,7 @@ end
 
 function verifyVisualization(mod, to_visualize, expected, update)
     update = update || haskey(ENV, "UPDATE_VISUAL_TESTS")
-    dot = FunctionFusion.as_dot(to_visualize; mod)
+    dot = FunctionFusion.visualize(to_visualize, MIME("text/vnd.graphviz"); mod)
 
     expected_dot = joinpath(@__DIR__, "visualized", expected * ".dot")
 
