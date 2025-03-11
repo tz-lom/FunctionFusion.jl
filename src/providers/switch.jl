@@ -85,7 +85,6 @@ macro switch_provider(expr)
             artifacts = []
             input = make_artifact(artifacts, input)
             output = make_artifact(artifacts, output)
-            @warn "O" options
             options = map(x -> esc(make_artifact(artifacts, x)), options)
 
 

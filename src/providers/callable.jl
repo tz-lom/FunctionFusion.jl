@@ -4,8 +4,9 @@ struct CallableProvider <: AbstractProvider
     call::Function
     inputs::Tuple{Vararg{DataType}}
     output::Type{<:Artifact}
+    mutables::Tuple{Vararg{DataType}}
 
-    function CallableProvider(call, inputs, output)
+    function CallableProvider(call, inputs, output, mutables)
         name = Symbol(call)
         unique_inputs = Set(inputs)
         if length(unique_inputs) != length(inputs)
@@ -14,13 +15,14 @@ struct CallableProvider <: AbstractProvider
         if output in unique_inputs
             error("Output type $output should not be an input for provider $name")
         end
-        new(call, inputs, output)
+        new(call, inputs, output, mutables)
     end
 end
 
 inputs(p::CallableProvider) = p.inputs
 outputs(p::CallableProvider) = (p.output,)
 storage(p::CallableProvider) = p.output
+mutables(p::CallableProvider) = p.mutables
 # short_description(p::CallableProvider) = extract_short_description(p.doc)
 
 Base.show(io::IO, p::CallableProvider) =
@@ -49,12 +51,7 @@ function read_function_signature(signature::Expr)
 
     # Ensure the expression represents a function definition with an explicit return type
     if signature.head != :(::)
-        throw(
-            DomainError(
-                signature,
-                "Function must be a function definition with an explicit return type",
-            ),
-        )
+        throw(DomainError(signature, "Function must have an explicit return type"))
     end
 
     artifacts = []
@@ -66,6 +63,7 @@ function read_function_signature(signature::Expr)
     arg_exprs = signature.args[1].args[2:end]
     # Preallocate the array for argument types
     arguments = Vector{Tuple{Symbol,Union{Symbol,Expr}}}(undef, length(arg_exprs))
+    mutables = []
 
     for (i, arg) in enumerate(arg_exprs)
         # Ensure each argument is a type-annotated expression
@@ -76,11 +74,14 @@ function read_function_signature(signature::Expr)
         end
         # Extract the argument name and type
         arg_name = arg.args[1]
-        arg_type = make_artifact(artifacts, arg.args[2])
+        arg_type, mutable = make_artifact(artifacts, arg.args[2]; support_mutable = true)
         arguments[i] = (arg_name, arg_type)
+        if mutable
+            push!(mutables, arg_name)
+        end
     end
 
-    return (; name, result, arguments, artifacts)
+    return (; name, result, arguments, artifacts, mutables)
 end
 
 """
@@ -139,14 +140,19 @@ macro provider(func::Expr)
             inputs = map((arg) -> esc(arg[2]), sig.arguments)
             name = esc(sig.name)
             output = esc(sig.result)
+            mutables = map(esc, sig.mutables)
 
             return quote
                 $(sig.artifacts...)
 
                 Core.@__doc__ $(esc(new_function))
 
-                local definition =
-                    $FunctionFusion.CallableProvider($name, ($(inputs...),), $output)
+                local definition = $FunctionFusion.CallableProvider(
+                    $name,
+                    ($(inputs...),),
+                    $output,
+                    ($(mutables...),),
+                )
 
                 function $FunctionFusion.describe_provider(::typeof($name))
                     return definition
@@ -168,6 +174,7 @@ macro provider(func::Expr)
             output = extract_type(sig.result)
 
             esc_name = esc(sig.name)
+            mutables = map(esc, sig.mutables)
 
             new_function = Expr(
                 :(=),
@@ -184,6 +191,7 @@ macro provider(func::Expr)
                     $esc_name,
                     ($(inputs...),),
                     $(esc(sig.result)),
+                    ($(mutables...),),
                 )
 
                 function $FunctionFusion.describe_provider(::typeof($esc_name))
@@ -198,15 +206,27 @@ macro provider(func::Expr)
         Expr(:(::), [Expr(:call, [name, inputs...]), output]) => begin
             name = esc(name)
             artifacts = []
-            inputs = map(x -> esc(make_artifact(artifacts, x)), inputs)
+            mutables = []
+            inputs = map(inputs) do x
+                type, is_mutable = make_artifact(artifacts, x; support_mutable = true)
+                e = esc(type)
+                if is_mutable
+                    push!(mutables, e)
+                end
+                return e
+            end
             output = esc(make_artifact(artifacts, output))
             docname = gensym(:doc)
             return quote
                 $(artifacts...)
 
                 Core.@__doc__ $(esc(docname))() = nothing
-                local definition =
-                    $FunctionFusion.CallableProvider($name, ($(inputs...),), $output)
+                local definition = $FunctionFusion.CallableProvider(
+                    $name,
+                    ($(inputs...),),
+                    $output,
+                    ($(mutables...),),
+                )
                 Base.delete_method(Base.which($(esc(docname)), ()))
 
                 function $FunctionFusion.describe_provider(::typeof($name))
@@ -222,7 +242,15 @@ macro provider(func::Expr)
             name = esc(name)
             alias = esc(alias)
             artifacts = []
-            inputs = map(x -> esc(make_artifact(artifacts, x)), inputs)
+            mutables = []
+            inputs = map(inputs) do x
+                type, is_mutable = make_artifact(artifacts, x; support_mutable = true)
+                e = esc(type)
+                if is_mutable
+                    push!(mutables, e)
+                end
+                return e
+            end
             output = esc(make_artifact(artifacts, output))
             def = gensym(:definition)
             return quote
@@ -230,8 +258,12 @@ macro provider(func::Expr)
 
                 Core.@__doc__ $name(args...) = $alias(args...)
 
-                local definition =
-                    $FunctionFusion.CallableProvider($name, ($(inputs...),), $output)
+                local definition = $FunctionFusion.CallableProvider(
+                    $name,
+                    ($(inputs...),),
+                    $output,
+                    ($(mutables...),),
+                )
 
                 function $FunctionFusion.describe_provider(::typeof($name))
                     return definition
