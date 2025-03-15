@@ -1,7 +1,5 @@
 module FunctionFusion_GraphVis
 
-export visualize
-
 import FunctionFusion
 using GraphViz: GraphViz
 

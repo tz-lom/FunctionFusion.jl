@@ -9,12 +9,15 @@ OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 
 [weakdeps]
 GraphViz = "f526b714-d49f-11e8-06ff-31ed36ee7ee0"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [extensions]
 FunctionFusion_GraphVis = "GraphViz"
+FunctionFusion_Test = "Test"
 
 [compat]
 GraphViz = "~0.2"
 Match = "^2.0"
 OrderedCollections = "1.7.0"
-julia = "1.9 - 1.12"
+Test = "1.9 - 1.13"
+julia = "1.9 - 1.13"

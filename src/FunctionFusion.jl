@@ -13,7 +13,8 @@ export @artifact,
     @callback_provider,
     @switch_provider,
     substitute,
-    visualize
+    visualize,
+    @audit_provider
 
 import Base
 using Match
@@ -44,10 +45,8 @@ include("substitute.jl")
 include("implement.jl")
 
 
-# @todo: extract into submodule
 include("visualization.jl")
 
-
-
+include("audit.jl")
 
 end # module FunctionFusion
