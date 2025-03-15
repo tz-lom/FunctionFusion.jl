@@ -20,6 +20,7 @@ function define_artifact(iname, itype; doc = false)
     end
 end
 
+
 """
     @artifact name[,name...] = Type
 
@@ -32,19 +33,23 @@ Declares `Artifact` associated with `Type`
 ```
 """
 macro artifact(expr::Expr)
-    @match expr begin
+    expr = @match expr begin
         Expr(:(=), [Expr(:tuple, inames), itype]) => begin
             exprs = map(inames) do iname
                 define_artifact(iname, itype; doc = true)
             end
-
-            return Expr(:block, exprs...)
+            Expr(:block, exprs...)
         end
         Expr(:(=), [iname::Symbol, itype]) => begin
-            return define_artifact(iname, itype; doc = true)
+            define_artifact(iname, itype; doc = true)
         end
         _ => error("Unsupported syntax: $(dump(expr))")
     end
+    Base.replace_linenums!(expr, __source__)
+end
+
+macro artifact(name, type, doc = false)
+    Base.replace_linenums!(define_artifact(name, type; doc), __source__)
 end
 
 """

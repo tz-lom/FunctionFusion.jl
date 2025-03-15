@@ -12,9 +12,6 @@ using FunctionFusion
 @artifact F1_in = Int
 @artifact F1_out = Int
 
-# @template C1 P1 P2
-# @implement C1_impl C1 F1_in => A1 A3 => F1_out
-
 @algorithm N1(A1)::A3 = [P1, P2]
 
 @invoke_with I1 = N1{A1 => F1_in,A3 => F1_out}

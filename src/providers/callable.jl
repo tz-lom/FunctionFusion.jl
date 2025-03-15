@@ -112,7 +112,7 @@ macro provider(func::Expr)
     # Helper function to extract the artifact type
     extract_type = (type) -> :($artifact_type($type))
 
-    @match func begin
+    expr = @match func begin
         # Match the expression format of a function definition
         Expr(:function, [signature, body]) => begin
             # Read the function signature
@@ -142,7 +142,7 @@ macro provider(func::Expr)
             output = esc(sig.result)
             mutables = map(esc, sig.mutables)
 
-            return quote
+            quote
                 $(sig.artifacts...)
 
                 Core.@__doc__ $(esc(new_function))
@@ -168,8 +168,10 @@ macro provider(func::Expr)
             sig = read_function_signature(signature)
 
             artifacts = []
-            new_args =
-                map((arg,) -> Expr(:(::), arg[1], extract_type(arg[2])), sig.arguments)
+            new_args = map(
+                (arg,) -> Expr(:(::), arg[1], extract_type(arg[2])),
+                sig.arguments,
+            )
             inputs = map((arg) -> esc(arg[2]), sig.arguments)
             output = extract_type(sig.result)
 
@@ -182,7 +184,7 @@ macro provider(func::Expr)
                 body,
             )
 
-            return quote
+            quote
                 $(sig.artifacts...)
 
                 Core.@__doc__ $(esc(new_function))
@@ -217,7 +219,7 @@ macro provider(func::Expr)
             end
             output = esc(make_artifact(artifacts, output))
             docname = gensym(:doc)
-            return quote
+            quote
                 $(artifacts...)
 
                 Core.@__doc__ $(esc(docname))() = nothing
@@ -237,43 +239,45 @@ macro provider(func::Expr)
             end
         end
         # Match the expression format of a provider alias
-        Expr(:(=), [name, Expr(:(::), [Expr(:call, [alias, inputs...]), output])]) => begin
-            qname = QuoteNode(name)
-            name = esc(name)
-            alias = esc(alias)
-            artifacts = []
-            mutables = []
-            inputs = map(inputs) do x
-                type, is_mutable = make_artifact(artifacts, x; support_mutable = true)
-                e = esc(type)
-                if is_mutable
-                    push!(mutables, e)
+        Expr(:(=), [name, Expr(:(::), [Expr(:call, [alias, inputs...]), output])]) =>
+            begin
+                qname = QuoteNode(name)
+                name = esc(name)
+                alias = esc(alias)
+                artifacts = []
+                mutables = []
+                inputs = map(inputs) do x
+                    type, is_mutable = make_artifact(artifacts, x; support_mutable = true)
+                    e = esc(type)
+                    if is_mutable
+                        push!(mutables, e)
+                    end
+                    return e
                 end
-                return e
-            end
-            output = esc(make_artifact(artifacts, output))
-            def = gensym(:definition)
-            return quote
-                $(artifacts...)
+                output = esc(make_artifact(artifacts, output))
+                def = gensym(:definition)
+                quote
+                    $(artifacts...)
 
-                Core.@__doc__ $name(args...) = $alias(args...)
+                    Core.@__doc__ $name(args...) = $alias(args...)
 
-                local definition = $FunctionFusion.CallableProvider(
-                    $name,
-                    ($(inputs...),),
-                    $output,
-                    ($(mutables...),),
-                )
+                    local definition = $FunctionFusion.CallableProvider(
+                        $name,
+                        ($(inputs...),),
+                        $output,
+                        ($(mutables...),),
+                    )
 
-                function $FunctionFusion.describe_provider(::typeof($name))
-                    return definition
+                    function $FunctionFusion.describe_provider(::typeof($name))
+                        return definition
+                    end
+
+                    $FunctionFusion.is_provider(::typeof($name)) = true
                 end
-
-                $FunctionFusion.is_provider(::typeof($name)) = true
             end
-        end
         _ => throw(DomainError(func, "Can't make provider with given definition"))
     end
+    Base.replace_linenums!(expr, __source__)
 end
 
 

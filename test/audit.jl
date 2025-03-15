@@ -11,7 +11,7 @@
         x .+= 1
     end
 
-    @provider function P4(x::{In3 => Vector})::{Out3 => Vector}
+    @provider function P4(x::{In4 => Vector})::{Out4 => Vector}
         x
     end
 
