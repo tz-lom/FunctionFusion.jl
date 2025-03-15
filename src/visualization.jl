@@ -1,5 +1,3 @@
-import GraphViz
-
 struct NameShortener
     values::IdDict
     mod::Module
@@ -557,24 +555,16 @@ function render!(ctx::GraphBuilder, p::SwitchProvider; _...)
     return id
 end
 
-
-# function visualize(lst::Vector)
-#     providers = collect_providers(lst)
-#     g = digraph(compound = "true")
-#     foreach(p -> visualize!(g, p, g), providers)
-#     return g
-# end
-
-function as_dot(p; mod = Main)
-    g = GraphBuilder(; mod)
+function visualize(p, format::MIME"text/vnd.graphviz"; kvargs...)
+    g = GraphBuilder(; kvargs...)
     p = describe_provider(p)
     g.primary = p
     render!(g, p)
     as_dot(g)
 end
 
-function as_dot(providers::Vector; mod = Main)
-    g = GraphBuilder(; mod)
+function visualize(providers::Vector, format::MIME"text/vnd.graphviz"; kvargs...)
+    g = GraphBuilder(; kvargs...)
     g.primary = nothing
     for p in providers
         render!(g, p)
@@ -582,9 +572,23 @@ function as_dot(providers::Vector; mod = Main)
     as_dot(g)
 end
 
-function visualize(p; mod = Main)
-    dot = as_dot(p; mod)
-    grph = GraphViz.Graph(dot)
-    # GraphViz.layout!(grph, engine = "dot")
-    grph
-end
+default_format::MIME = MIME("text/vnd.graphviz")
+
+"""
+    visualize(what, [format]; parameters...)
+
+Provides visualization in MIME `format` for `what`.
+`what` can be either provider or vector of providers
+If `format` is not specified then it is chosen automatically:
+* If `GrahpViz` package is not loaded then it is `MIME"text/vnd.graphviz"` which is a graphviz document.
+* If `GraphViz` package is loaded then it would be `MIME"image/svg+xml"` which is a .svg image.
+
+Load GraphViz in your REPL to have visualization as picture (automatically displayed in VScode).
+
+`parameters`:
+
+* `mod=Main` display names relative to that module
+* `depth=Inf` display only `depth` nesting of the graph
+* `hide_types=False` hide types of the artifacts
+"""
+visualize(p; kvargs...) = visualize(p, default_format; kvargs...)

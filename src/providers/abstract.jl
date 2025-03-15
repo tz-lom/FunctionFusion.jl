@@ -123,12 +123,40 @@ function short_description(p::AbstractProvider)
 end
 
 
-function make_artifact(artifacts, expr)
+function make_artifact(artifacts, expr; support_mutable = false)
     return @match expr begin
-        Expr(:braces, [Expr(:call, [:(=>), name, type])]) => begin
+        Expr(:braces, [Expr(:call, [:(=>), name::Symbol, type])]) => begin
             push!(artifacts, define_artifact(name, type))
-            return name
+            if support_mutable
+                return name, false
+            else
+                return name
+            end
         end
-        _ => expr
+        s::Symbol => begin # Just symbol name
+            if support_mutable
+                return s, false
+            else
+                return s
+            end
+        end
+        Expr(:(.), _) => if support_mutable # e.g. A.B.C
+            return expr, false
+        else
+            return expr
+        end
+        Expr(:braces, [Expr(:call, [:!, s::Symbol])]), if support_mutable
+        end => return s, true
+        Expr(:braces, [Expr(:call, [:!, (ex && Expr(:(.), _))])]),
+        if support_mutable
+        end => return ex, true
+        Expr(:braces, [Expr(:call, [:(=>), Expr(:call, [:!, name::Symbol]), type])]),
+        if support_mutable
+        end => begin
+            push!(artifacts, define_artifact(name, type))
+            return name, true
+        end
+
+        _ => error("Unknown artifact type definition $expr")
     end
 end
