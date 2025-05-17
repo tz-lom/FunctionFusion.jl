@@ -13,17 +13,14 @@ artifact_11 [label="A8\nBool",shape="ellipse",style="filled",color="#4a7c59",fil
 artifact_12 [label="A9\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
 artifact_13 [label="A10\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
 artifact_14 [label="A7\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-promote_15 [shape="rpromoter",label="P5",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_16 [label="A12\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_17 [label="A11\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-unimplemented_18 [shape="rectangle",label="Unimplemented Sub.P6",color="#ff8c61"]
-artifact_19 [label="Sub.A14\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_20 [label="Sub.A13\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-switch_provider_21 [shape="folder",label="Sub.P7",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_22 [label="Sub.A16\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_23 [label="Sub.A15\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_24 [label="Sub.A17\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_25 [label="Sub.A18\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+unimplemented_15 [shape="rectangle",label="Unimplemented Sub.P6",color="#ff8c61"]
+artifact_16 [label="Sub.A14\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_17 [label="Sub.A13\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+switch_provider_18 [shape="folder",label="Sub.P7",style="filled",color="#ff8c61",fillcolor="#faa275"]
+artifact_19 [label="Sub.A16\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_20 [label="Sub.A15\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_21 [label="Sub.A17\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_22 [label="Sub.A18\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
 
 provider_1 -> artifact_2
 artifact_3 -> provider_1
@@ -35,12 +32,10 @@ artifact_11 -> conditional_10 [label="?"]
 artifact_12 -> conditional_10 [label="true"]
 artifact_13 -> conditional_10 [label="false"]
 conditional_10 -> artifact_14
-promote_15 -> artifact_16
-artifact_17 -> promote_15
-unimplemented_18 -> artifact_19
-artifact_20 -> unimplemented_18
-switch_provider_21 -> artifact_22
-artifact_23 -> switch_provider_21
-artifact_24 -> switch_provider_21 [style="dashed"]
-artifact_25 -> switch_provider_21 [style="dashed"]
+unimplemented_15 -> artifact_16
+artifact_17 -> unimplemented_15
+switch_provider_18 -> artifact_19
+artifact_20 -> switch_provider_18
+artifact_21 -> switch_provider_18 [style="dashed"]
+artifact_22 -> switch_provider_18 [style="dashed"]
 }

@@ -17,9 +17,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        version: ['lts', 'pre']
+        version: ['lts']
         experimental: [false]
         include:
+        - version: 'pre'
+          experimental: true
         - version: 'nightly'
           experimental: true
       

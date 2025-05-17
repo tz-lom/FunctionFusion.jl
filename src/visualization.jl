@@ -572,6 +572,24 @@ function visualize(providers::Vector, format::MIME"text/vnd.graphviz"; kvargs...
     as_dot(g)
 end
 
+visualize(mod::Module, format::MIME"text/vnd.graphviz"; kvargs...) =
+    visualize([mod], format; kvargs...)
+
+function visualize(mods::Vector{Module}, format::MIME"text/vnd.graphviz"; kvargs...)
+    # collect all providers that belong to mods
+    providers = map(methods(is_provider)) do m
+        m.sig.parameters[2]
+    end
+
+    # providers = providers[providers.∉Ref([Function, FunctionFusion.AbstractProvider])]
+    filter!(providers) do p
+        parentmodule(p) ∈ mods
+    end
+    sort!(providers; by = Symbol)
+
+    return visualize(map(p -> p.instance, providers), format; kvargs...)
+end
+
 default_format::MIME = MIME("text/vnd.graphviz")
 
 """
