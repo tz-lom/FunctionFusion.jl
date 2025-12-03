@@ -1,20 +1,18 @@
 module FunctionFusion
 
 export @artifact,
-    @provider,
-    @conditional,
-    @promote,
-    @algorithm,
-    @template,
-    @implement,
-    @group,
-    @unimplemented,
-    @invoke_with,
-    @callback_provider,
-    @switch_provider,
-    substitute,
-    visualize,
-    @audit_provider
+	@provider,
+	@conditional,
+	@promote,
+	@algorithm,
+	@group,
+	@unimplemented,
+	@invoke_with,
+	@callback_provider,
+	@switch_provider,
+	substitute,
+	visualize,
+	@audit_provider
 
 import Base
 using Match
