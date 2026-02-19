@@ -1,0 +1,30 @@
+digraph { layout=dot; compound=true;
+artifact_2 [label="In1\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_3 [label="OutX\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_4 [label="OutY\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+subgraph cluster_provider_1 {
+label="Algorithm generated"
+subgraph cluster_provider_1_inputs {
+label="Inputs"
+provider_1__artifact_5 [label="In1\nInt64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
+} // cluster_provider_1_inputs
+provider_1__artifact_6 [label="Mid\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+subgraph cluster_provider_1_outputs {
+label="Outputs"
+provider_1__artifact_7 [label="OutX\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_8 [label="OutY\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+} // cluster_provider_1_outputs
+ // before providers
+provider_1__provider_9 [shape="rectangle",label="step1",style="filled",color="#ff8c61",fillcolor="#faa275"]
+provider_1__provider_10 [shape="rectangle",label="step2",style="filled",color="#ff8c61",fillcolor="#faa275"]
+} // cluster_provider_1
+
+artifact_2 -> provider_1__artifact_5
+provider_1__artifact_7 -> artifact_3 [arrowhead="none",color="#4a7c59"]
+provider_1__artifact_8 -> artifact_4 [arrowhead="none",color="#4a7c59"]
+provider_1__provider_9 -> provider_1__artifact_6
+provider_1__artifact_5 -> provider_1__provider_9
+provider_1__provider_10 -> provider_1__artifact_7
+provider_1__provider_10 -> provider_1__artifact_8
+provider_1__artifact_6 -> provider_1__provider_10
+}
