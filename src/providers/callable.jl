@@ -28,7 +28,7 @@ end
 
 inputs(p::CallableProvider) = p.inputs
 outputs(p::CallableProvider) = p.outputs
-storage(p::CallableProvider) = length(p.outputs) == 1 ? p.outputs[1] : Set(p.outputs)
+storage(p::CallableProvider) = length(p.outputs) == 1 ? p.outputs[1] : OrderedSet(p.outputs)
 mutables(p::CallableProvider) = p.mutables
 # short_description(p::CallableProvider) = extract_short_description(p.doc)
 
