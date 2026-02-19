@@ -9,8 +9,8 @@ label="Inputs"
 provider_1__artifact_5 [label="QA\nInt64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
 provider_1__artifact_6 [label="QB\nInt64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
 } // cluster_provider_1_inputs
-provider_1__artifact_7 [label="QD\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1__artifact_8 [label="QC\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_7 [label="QC\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_8 [label="QD\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
 subgraph cluster_provider_1_outputs {
 label="Outputs"
 provider_1__artifact_9 [label="QResult\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
@@ -23,11 +23,11 @@ provider_1__provider_11 [shape="rectangle",label="consume_both",style="filled",c
 artifact_2 -> provider_1__artifact_5
 artifact_3 -> provider_1__artifact_6
 provider_1__artifact_9 -> artifact_4 [arrowhead="none",color="#4a7c59"]
-provider_1__provider_10 -> provider_1__artifact_8
 provider_1__provider_10 -> provider_1__artifact_7
+provider_1__provider_10 -> provider_1__artifact_8
 provider_1__artifact_5 -> provider_1__provider_10
 provider_1__artifact_6 -> provider_1__provider_10
 provider_1__provider_11 -> provider_1__artifact_9
-provider_1__artifact_8 -> provider_1__provider_11
 provider_1__artifact_7 -> provider_1__provider_11
+provider_1__artifact_8 -> provider_1__provider_11
 }

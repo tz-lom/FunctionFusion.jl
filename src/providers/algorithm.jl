@@ -80,7 +80,7 @@ function define_algorithm(
     artifacts = OrderedSet()
     for provider in providers
         storage_container = storage(provider)
-        if typeof(storage_container) <: Set
+        if typeof(storage_container) <: OrderedSet
             union!(artifacts, storage_container)
         else
             push!(artifacts, storage_container)
