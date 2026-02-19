@@ -41,8 +41,7 @@ mutable struct GraphBuilder
     primary::Union{Nothing,Missing,Any}
     context::String
 
-    GraphBuilder(; mod = Main) =
-        new([], IdDict(), NameShortener(mod), [], 1, 0, missing, "")
+    GraphBuilder(; mod = Main) = new([], Dict(), NameShortener(mod), [], 1, 0, missing, "")
 end
 
 function as_dot(ctx::GraphBuilder)
@@ -279,7 +278,7 @@ function render!(ctx::GraphBuilder, p::CallableProvider; _...)
                 fillcolor = "#faa275",
             ),
         )
-        for a in outputs(p)
+        for a in p.outputs
             other = render!(ctx, a)
             connect!(ctx, id, other)
         end

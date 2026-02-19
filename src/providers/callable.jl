@@ -3,7 +3,7 @@
 struct CallableProvider <: AbstractProvider
     call::Function
     inputs::Tuple{Vararg{DataType}}
-    output::Tuple{Vararg{DataType}}
+    outputs::Tuple{Vararg{DataType}}
     mutables::Tuple{Vararg{DataType}}
 
     function CallableProvider(call, inputs, outputs, mutables)
@@ -27,23 +27,23 @@ struct CallableProvider <: AbstractProvider
 end
 
 inputs(p::CallableProvider) = p.inputs
-outputs(p::CallableProvider) = p.output
-storage(p::CallableProvider) = length(p.output) == 1 ? p.output[1] : Set(p.output)
+outputs(p::CallableProvider) = p.outputs
+storage(p::CallableProvider) = length(p.outputs) == 1 ? p.outputs[1] : Set(p.outputs)
 mutables(p::CallableProvider) = p.mutables
 # short_description(p::CallableProvider) = extract_short_description(p.doc)
 
 Base.show(io::IO, p::CallableProvider) =
-    if length(p.output) == 1
-        print(io, "CallableProvider $(nameof(p.call))$(p.inputs)::$(p.output[1])")
+    if length(p.outputs) == 1
+        print(io, "CallableProvider $(nameof(p.call))$(p.inputs)::$(p.outputs[1])")
     else
-        print(io, "CallableProvider $(nameof(p.call))$(p.inputs)::$(p.output)")
+        print(io, "CallableProvider $(nameof(p.call))$(p.inputs)::$(p.outputs)")
     end
 
 function provide(p::CallableProvider, result::Type, context, resolve)
-    if result ∉ p.output
+    if result ∉ p.outputs
         error("$p can't provide $result")
     end
-    if length(p.output) == 1
+    if length(p.outputs) == 1
         # Single output - call and return the output directly
         return quote
             if isnothing($context[$result])
@@ -53,9 +53,9 @@ function provide(p::CallableProvider, result::Type, context, resolve)
         end
     else
         # Multiple outputs - store all outputs in context and return the requested one
-        first_output = p.output[1]
+        first_output = p.outputs[1]
         all_assignments =
-            [:($context[$(p.output[i])] = __result__[$i]) for i = 1:length(p.output)]
+            [:($context[$(p.outputs[i])] = __result__[$i]) for i = 1:length(p.outputs)]
         return quote
             if isnothing($context[$first_output])
                 __result__ = $(p.call)($([resolve(i) for i in p.inputs]...))
@@ -196,10 +196,10 @@ macro provider(func::Expr)
             new_function = func
             new_function.args[1] = new_signature
 
-            # Extract and escape inputs, name, and output
+            # Extract and escape inputs, name, and outputs
             inputs = map((arg) -> esc(arg[2]), sig.arguments)
             name = esc(sig.name)
-            output = build_output_expr(sig.result)
+            outputs = build_output_expr(sig.result)
             mutables = map(esc, sig.mutables)
 
             quote
@@ -210,7 +210,7 @@ macro provider(func::Expr)
                 local definition = $FunctionFusion.CallableProvider(
                     $name,
                     ($(inputs...),),
-                    $output,
+                    $outputs,
                     ($(mutables...),),
                 )
 
@@ -233,14 +233,14 @@ macro provider(func::Expr)
                 sig.arguments,
             )
             inputs = map((arg) -> esc(arg[2]), sig.arguments)
-            output = extract_return_type(sig.result)
+            outputs = extract_return_type(sig.result)
 
             esc_name = esc(sig.name)
             mutables = map(esc, sig.mutables)
 
             new_function = Expr(
                 :(=),
-                Expr(:(::), Expr(:call, sig.name, new_args...), output),
+                Expr(:(::), Expr(:call, sig.name, new_args...), outputs),
                 body,
             )
 
@@ -266,8 +266,8 @@ macro provider(func::Expr)
             end
         end
 
-        # Match the expression format of a pre-defined function with inputs and output
-        Expr(:(::), [Expr(:call, [name, inputs...]), output]) => begin
+        # Match the expression format of a pre-defined function with inputs and outputs
+        Expr(:(::), [Expr(:call, [name, inputs...]), outputs]) => begin
             name = esc(name)
             artifacts = []
             mutables = []
@@ -279,7 +279,7 @@ macro provider(func::Expr)
                 end
                 return e
             end
-            output_expr = make_output_artifacts!(artifacts, output)
+            output_expr = make_output_artifacts!(artifacts, outputs)
             docname = gensym(:doc)
             quote
                 $(artifacts...)
@@ -301,7 +301,7 @@ macro provider(func::Expr)
             end
         end
         # Match the expression format of a provider alias
-        Expr(:(=), [name, Expr(:(::), [Expr(:call, [alias, inputs...]), output])]) =>
+        Expr(:(=), [name, Expr(:(::), [Expr(:call, [alias, inputs...]), outputs])]) =>
             begin
                 qname = QuoteNode(name)
                 name = esc(name)
@@ -316,7 +316,7 @@ macro provider(func::Expr)
                     end
                     return e
                 end
-                output_expr = make_output_artifacts!(artifacts, output)
+                output_expr = make_output_artifacts!(artifacts, outputs)
 
                 def = gensym(:definition)
                 quote
