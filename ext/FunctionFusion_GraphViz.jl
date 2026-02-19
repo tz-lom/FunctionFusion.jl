@@ -1,4 +1,4 @@
-module FunctionFusion_GraphVis
+module FunctionFusion_GraphViz
 
 import FunctionFusion
 using GraphViz: GraphViz
