@@ -8,7 +8,16 @@ struct NameShortener
             all_names = names(mod, all = true, imported = true)
         end
 
-        return new(IdDict(getproperty(mod, name) => name for name in all_names), mod)
+        values = IdDict()
+        for name in all_names
+            try
+                values[getproperty(mod, name)] = name
+            catch
+                # ignore if property could not be retrieved
+            end
+        end
+
+        return new(values, mod)
     end
 end
 

@@ -12,19 +12,19 @@ using FunctionFusion
 
 # Variant 1: full function definition with tuple return
 @provider function multi_output(x::Input)::(OutputA, OutputB)
-	return (x * 2, string(x))
+    return (x * 2, string(x))
 end
 
 # Single-output provider consuming one of the multi-outputs
 @provider function use_a(a::OutputA)::{Result1 => Int}
-	return a + 100
+    return a + 100
 end
 
 @algorithm generated(Input)::Result1 = [multi_output, use_a]
 
 function expected(x::Int)::Int
-	tmp = (x*2, string(x))
-	return tmp[1] + 100
+    tmp = (x*2, string(x))
+    return tmp[1] + 100
 end
 
 verifyEquals(generated, expected, 5)
@@ -45,18 +45,18 @@ using FunctionFusion
 @artifact OutY = String
 
 @provider function step1(a::In1)::Mid
-	return a + 1
+    return a + 1
 end
 
 @provider function step2(a::Mid)::(OutX, OutY)
-	return (a * 10, string(a))
+    return (a * 10, string(a))
 end
 
 @algorithm generated(In1)::(OutX, OutY) = [step1, step2]
 
 function expected(a::Int)::Tuple{Int,String}
-	mid = a + 1
-	return (mid * 10, string(mid))
+    mid = a + 1
+    return (mid * 10, string(mid))
 end
 
 @test generated(3) == expected(3)
@@ -82,7 +82,7 @@ using FunctionFusion
 @provider short_multi(a::SA, b::SB)::(SC, {SD => String}) = (Float64(a + b), string(a - b))
 
 @provider function use_both(c::SC, d::SD)::{SResult => String}
-	return "$(c) and $(d)"
+    return "$(c) and $(d)"
 end
 
 @algorithm short_generated(SA, SB)::SResult = [short_multi, use_both]
@@ -107,13 +107,13 @@ using FunctionFusion
 @artifact QD = String
 
 function my_func(a, b)
-	return (a * b, string(a + b))
+    return (a * b, string(a + b))
 end
 
 @provider my_func(QA, QB)::(QC, QD)
 
 @provider function consume_both(c::QC, d::QD)::{QResult => String}
-	return "$c: $d"
+    return "$c: $d"
 end
 
 @algorithm q_generated(QA, QB)::QResult = [my_func, consume_both]
@@ -138,13 +138,13 @@ using FunctionFusion
 @artifact RD = String
 
 function original_func(a, b)
-	return (a - b, string(a + b))
+    return (a - b, string(a + b))
 end
 
 @provider aliased = original_func(RA, RB)::(RC, RD)
 
 @provider function use_rd(d::RD)::{RResult => String}
-	return "result: $d"
+    return "result: $d"
 end
 
 @algorithm r_generated(RA, RB)::RResult = [aliased, use_rd]
@@ -165,7 +165,7 @@ using FunctionFusion
 @artifact TB = Int
 
 @provider function single_tuple(a::TA)::(TB,)
-	return a + 42
+    return a + 42
 end
 
 @algorithm t_generated(TA)::TB = [single_tuple]
