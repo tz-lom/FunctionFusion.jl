@@ -49,13 +49,35 @@ mutable struct GraphBuilder
     id_incr::Int
     primary::Union{Nothing,Missing,Any}
     context::String
+    show_struct_fields::Bool
+    show_struct_fields_with_types::Bool
 
-    GraphBuilder(; mod = Main) = new([], Dict(), NameShortener(mod), [], 1, 0, missing, "")
+
+    GraphBuilder(;
+        mod = Main,
+        show_struct_fields = true,
+        show_struct_fields_with_types = true,
+    ) = new(
+        [],
+        Dict(),
+        NameShortener(mod),
+        [],
+        1,
+        0,
+        missing,
+        "",
+        show_struct_fields,
+        show_struct_fields_with_types,
+    )
+end
+
+struct HTML
+    html::String
 end
 
 function as_dot(ctx::GraphBuilder)
     return """
-    digraph { layout=dot; compound=true;
+    digraph { layout=dot; compound=true; node [fontname="Helvetica"];
     $(join(ctx.clusters, '\n'))
 
     $(join(ctx.connections, '\n'))
@@ -69,8 +91,15 @@ function add_to_cluster!(ctx::GraphBuilder, s::String)
     return ctx.current_place
 end
 
+function render_props(props)
+    return [
+        value isa HTML ? "$name=<$(value.html)>" :
+        "$name=\"$(escape_string(value, keep="\\"))\"" for (name, value) in props
+    ]
+end
+
 function create_subcluster!(f, ctx::GraphBuilder, name; props...)
-    str_props = ["$name=\"$(escape_string(value))\"" for (name, value) in props]
+    str_props = render_props(props)
     add_to_cluster!(ctx, "subgraph cluster_$name {")
     add_to_cluster!(ctx, join(str_props, ";"))
     result = f()
@@ -79,7 +108,7 @@ function create_subcluster!(f, ctx::GraphBuilder, name; props...)
 end
 
 function create_cluster!(f, ctx::GraphBuilder, name; props...)
-    str_props = ["$name=\"$(escape_string(value))\"" for (name, value) in props]
+    str_props = render_props(props)
     old_place = ctx.current_place
     ctx.current_place = length(ctx.clusters) + 1
     add_to_cluster!(ctx, "subgraph cluster_$name {")
@@ -105,7 +134,7 @@ function connect!(ctx::GraphBuilder, left, right; props...)
 end
 
 function node(name; props...)
-    str_props = ["$name=\"$(escape_string(value,keep="\\"))\"" for (name, value) in props]
+    str_props = render_props(props)
 
     if length(str_props) > 0
         return "$name [$(join(str_props, ','))]"
@@ -149,17 +178,34 @@ function render!(ctx::GraphBuilder, a::Type{T}; primary = true) where {T<:Artifa
     id, new = get_id(ctx, a, :artifact)
     if new
         name = short_name(ctx.shortener, a)
-        label = "$name\n$(artifact_type(a))"
+
+        html = """<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+         <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">$name : $(artifact_type(a))</TD></TR>
+        """
+
+        type = artifact_type(T)
+        if primary && ctx.show_struct_fields && isstructtype(type)
+            field_names = fieldnames(type)
+            for (i, field) in enumerate(field_names)
+                fieldtype = Core.fieldtype(type, field)
+                html *= """<TR><TD ALIGN="LEFT" """
+                if i % 2 == 1
+                    html *= """BGCOLOR="#F8F8F8" """
+                else
+                    html *= """BGCOLOR="#EBEBEB" """
+                end
+                html *= "> + $field"
+                if ctx.show_struct_fields_with_types
+                    html *= " : $(short_name(ctx.shortener, Core.fieldtype(type, field)))"
+                end
+                html *= "</TD></TR>"
+
+            end
+        end
+        html *= "</TABLE>"
         add_to_cluster!(
             ctx,
-            node(
-                id;
-                label,
-                shape = "ellipse",
-                style = primary ? "filled" : "",
-                color = "#4a7c59",
-                fillcolor = "#8fc0a9",
-            ),
+            node(id; label = HTML(html), shape = "plain", style = primary ? "filled" : ""),
         )
     end
     return id
