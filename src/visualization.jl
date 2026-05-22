@@ -1,3 +1,25 @@
+module Visualization
+
+using ..FunctionFusion:
+    Artifact,
+    AlgorithmProvider,
+    CallableProvider,
+    CallbackProvider,
+    PromoteProvider,
+    ConditionalProvider,
+    GroupProvider,
+    UnimplementedProvider,
+    InvokeProvider,
+    SwitchProvider,
+    describe_provider,
+    inputs,
+    outputs,
+    short_description,
+    artifact_type,
+    is_artifact,
+    is_provider
+
+export visualize
 struct NameShortener
     values::IdDict
     mod::Module
@@ -25,7 +47,13 @@ function Base.show(io::IO, x::NameShortener)
     print(io, "NameShortener($(x.mod))")
 end
 
+short_type(@nospecialize _) = false
+short_type(::Type{T}) where {T<:Union{Vector,Matrix,Dict,Tuple,Set,String}} = true
+
 function short_name(ctx::NameShortener, @nospecialize(x))
+    if short_type(x)
+        return string(x)
+    end
     postfix = ""
     while true
         if haskey(ctx.values, x)
@@ -174,17 +202,22 @@ function get_id(ctx::GraphBuilder, object, prefix::Symbol)
     get_id(ctx, object, prefix, ctx.context)
 end
 
+show_fields(@nospecialize _) = true
+show_fields(::Union{Vector,Dict}) = true
+
 function render!(ctx::GraphBuilder, a::Type{T}; primary = true) where {T<:Artifact}
     id, new = get_id(ctx, a, :artifact)
     if new
         name = short_name(ctx.shortener, a)
+        type = artifact_type(a)
+        type_name = short_name(ctx.shortener, artifact_type(a))
 
         html = """<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
-         <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">$name : $(artifact_type(a))</TD></TR>
+         <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">$name : $(type_name)</TD></TR>
         """
 
         type = artifact_type(T)
-        if primary && ctx.show_struct_fields && isstructtype(type)
+        if primary && ctx.show_struct_fields && isstructtype(type) && !short_type(type)
             field_names = fieldnames(type)
             for (i, field) in enumerate(field_names)
                 fieldtype = Core.fieldtype(type, field)
@@ -664,3 +697,5 @@ Load GraphViz in your REPL to have visualization as picture (automatically displ
 * `hide_types=False` hide types of the artifacts
 """
 visualize(p; kvargs...) = visualize(p, default_format; kvargs...)
+
+end

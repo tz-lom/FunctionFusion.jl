@@ -1,28 +1,40 @@
-digraph { layout=dot; compound=true;
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
 subgraph cluster_provider_1 {
 label="Algorithm generated"
 subgraph cluster_provider_1_inputs {
 label="Inputs"
-provider_1__artifact_2 [label="F1_in\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">F1_in : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_inputs
 subgraph cluster_provider_1_outputs {
 label="Outputs"
-provider_1outputs__artifact_3 [label="F1_out\nInt64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1outputs__artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">F1_out : Int64</TD></TR>
+</TABLE>>,shape="plain",style=""]
 } // cluster_provider_1_outputs
  // before providers
 provider_1__invoke_4 [shape="record",label="{{<provider_1__invokeIn_5>F1_in⇥A1}|<body>I1|{<provider_1__invokeOut_6>F1_out⇥A3}}"]
-provider_1__artifact_13 [label="F1_out\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_13 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">F1_out : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1
 subgraph cluster_provider_1__provider_7 {
 label="Algorithm N1"
 subgraph cluster_provider_1__provider_7_inputs {
 label="Inputs"
-provider_1provider_1__provider_7__artifact_8 [label="A1\nInt64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_7__artifact_8 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A1 : Int64</TD></TR>
+</TABLE>>,shape="plain",style=""]
 } // cluster_provider_1__provider_7_inputs
-provider_1provider_1__provider_7__artifact_9 [label="A2\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_7__artifact_9 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A2 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 subgraph cluster_provider_1__provider_7_outputs {
 label="Outputs"
-provider_1provider_1__provider_7__artifact_10 [label="A3\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_7__artifact_10 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A3 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1__provider_7_outputs
  // before providers
 provider_1provider_1__provider_7__provider_11 [shape="rectangle",label="P1",style="filled",color="#ff8c61",fillcolor="#faa275"]
