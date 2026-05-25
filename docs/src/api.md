@@ -2,5 +2,5 @@
 
 ```@autodocs
 Modules = [FunctionFusion]
-Order   = [:module, :constant, :type, :function, :macro]
+Order   = [:module, :type, :macro, :function, :constant]
 ```

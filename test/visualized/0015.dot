@@ -1,29 +1,65 @@
-digraph { layout=dot; compound=true;
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
 provider_1 [shape="rectangle",label="P1",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_2 [label="A2\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_3 [label="A1\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A2 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A1 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 provider_4 [shape="rectangle",label="P2",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_5 [label="A4\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_6 [label="A3\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_5 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A4 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_6 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A3 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 provider_7 [shape="rectangle",label="P3",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_8 [label="A6\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_9 [label="A5\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_8 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A6 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_9 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A5 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 conditional_10 [shape="diamond",label="P4",style="filled",color="#b23a48",fillcolor="#fcb902"]
-artifact_11 [label="A8\nBool",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_12 [label="A9\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_13 [label="A10\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_14 [label="A7\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_11 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A8 : Bool</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_12 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A9 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_13 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A10 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_14 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A7 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 promote_15 [shape="rpromoter",label="P5",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_16 [label="A12\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_17 [label="A11\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_16 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A12 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_17 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A11 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 unimplemented_18 [shape="rectangle",label="Unimplemented Sub.P6",color="#ff8c61"]
-artifact_19 [label="Sub.A14\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_20 [label="Sub.A13\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_19 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Sub.A14 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_20 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Sub.A13 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 switch_provider_21 [shape="folder",label="Sub.P7",style="filled",color="#ff8c61",fillcolor="#faa275"]
-artifact_22 [label="Sub.A16\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_23 [label="Sub.A15\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_24 [label="Sub.A17\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_25 [label="Sub.A18\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_22 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Sub.A16 : Any</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_23 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Sub.A15 : Any</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_24 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Sub.A17 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_25 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Sub.A18 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 
 provider_1 -> artifact_2
 artifact_3 -> provider_1

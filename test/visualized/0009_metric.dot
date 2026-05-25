@@ -1,41 +1,69 @@
-digraph { layout=dot; compound=true;
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
 subgraph cluster_provider_1 {
 label="Algorithm compute_in_metric"
 subgraph cluster_provider_1_inputs {
 label="Inputs"
-provider_1__artifact_2 [label="TrainALocation\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1__artifact_3 [label="TrainASpeed\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1__artifact_4 [label="TrainBLocation\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1__artifact_5 [label="TrainBSpeed\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1__artifact_6 [label="Time\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">TrainALocation : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+provider_1__artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">TrainASpeed : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+provider_1__artifact_4 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">TrainBLocation : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+provider_1__artifact_5 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">TrainBSpeed : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+provider_1__artifact_6 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">Time : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_inputs
 subgraph cluster_provider_1_outputs {
 label="Outputs"
-provider_1__artifact_7 [label="FinalDistance\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_7 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">FinalDistance : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_outputs
  // before providers
 provider_1__invoke_8 [shape="record",label="{{<provider_1__invokeIn_9>TrainASpeed⇥C_Speed|<provider_1__invokeIn_10>TrainALocation⇥C_Start}|<body>new_location_A|{<provider_1__invokeOut_11>TrainANewLocation⇥C_End}}"]
-provider_1__artifact_22 [label="TrainANewLocation\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_22 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">TrainANewLocation : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 provider_1__invoke_23 [shape="record",label="{{<provider_1__invokeIn_9>TrainBSpeed⇥C_Speed|<provider_1__invokeIn_10>TrainBLocation⇥C_Start}|<body>new_location_B|{<provider_1__invokeOut_11>TrainBNewLocation⇥C_End}}"]
-provider_1__artifact_24 [label="TrainBNewLocation\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_24 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">TrainBNewLocation : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 provider_1__provider_25 [shape="rectangle",label="compute_final_distance",style="filled",color="#ff8c61",fillcolor="#faa275"]
 } // cluster_provider_1
 subgraph cluster_provider_1__provider_12 {
 label="Algorithm new_location"
 subgraph cluster_provider_1__provider_12_inputs {
 label="Inputs"
-provider_1provider_1__provider_12__artifact_13 [label="C_Speed\nFloat64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1provider_1__provider_12__artifact_14 [label="C_Start\nFloat64",shape="ellipse",style="",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_12__artifact_13 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">C_Speed : Float64</TD></TR>
+</TABLE>>,shape="plain",style=""]
+provider_1provider_1__provider_12__artifact_14 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">C_Start : Float64</TD></TR>
+</TABLE>>,shape="plain",style=""]
 } // cluster_provider_1__provider_12_inputs
-provider_1provider_1__provider_12__artifact_15 [label="C_Speed_Normalized\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1provider_1__provider_12__artifact_16 [label="C_Start_Normalized\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_12__artifact_15 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">C_Speed_Normalized : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+provider_1provider_1__provider_12__artifact_16 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">C_Start_Normalized : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 subgraph cluster_provider_1__provider_12_outputs {
 label="Outputs"
-provider_1provider_1__provider_12__artifact_17 [label="C_End\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_12__artifact_17 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">C_End : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1__provider_12_outputs
  // before providers
 provider_1provider_1__provider_12__provider_18 [shape="rectangle",label="compute_new_location",style="filled",color="#ff8c61",fillcolor="#faa275"]
-provider_1provider_1__provider_12__artifact_19 [label="C_Time\nFloat64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1provider_1__provider_12__artifact_19 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">C_Time : Float64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 provider_1provider_1__provider_12__provider_20 [shape="rectangle",label="normalize_speed_metric",style="filled",color="#ff8c61",fillcolor="#faa275"]
 provider_1provider_1__provider_12__provider_21 [shape="rectangle",label="normalize_start_metric",style="filled",color="#ff8c61",fillcolor="#faa275"]
 } // cluster_provider_1__provider_12

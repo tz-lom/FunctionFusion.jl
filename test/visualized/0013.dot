@@ -1,20 +1,30 @@
-digraph { layout=dot; compound=true;
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
 subgraph cluster_provider_1 {
 label="Algorithm Alg1"
 subgraph cluster_provider_1_inputs {
 label="Inputs"
-provider_1__artifact_2 [label="A1\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-provider_1__artifact_3 [label="B1\nBool",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A1 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+provider_1__artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">B1 : Bool</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_inputs
-provider_1__artifact_4 [label="A2\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_4 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A2 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 subgraph cluster_provider_1_outputs {
 label="Outputs"
-provider_1__artifact_5 [label="A3\nString",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_5 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A3 : String</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_outputs
  // before providers
 provider_1__provider_6 [shape="rectangle",label="P1",style="filled",color="#ff8c61",fillcolor="#faa275"]
 provider_1__callback_provider_7 [shape="insulator",label="P2",style="filled",color="#ff8c61",fillcolor="#faa275"]
-provider_1__artifact_8 [label="AP2\nAny",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_8 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">AP2 : Any</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 provider_1__provider_9 [shape="rectangle",label="P3",style="filled",color="#ff8c61",fillcolor="#faa275"]
 } // cluster_provider_1
 

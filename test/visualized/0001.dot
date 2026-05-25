@@ -1,14 +1,20 @@
-digraph { layout=dot; compound=true;
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
 subgraph cluster_provider_1 {
 label="Algorithm generated"
 subgraph cluster_provider_1_inputs {
 label="Inputs"
-provider_1__artifact_2 [label="A1\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A1 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_inputs
-provider_1__artifact_3 [label="A2\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A2 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 subgraph cluster_provider_1_outputs {
 label="Outputs"
-provider_1__artifact_4 [label="A3\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+provider_1__artifact_4 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A3 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 } // cluster_provider_1_outputs
  // before providers
 provider_1__provider_5 [shape="rectangle",label="P1",style="filled",color="#ff8c61",fillcolor="#faa275"]

@@ -1,7 +1,11 @@
-digraph { layout=dot; compound=true;
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
 unimplemented_1 [shape="rectangle",label="Unimplemented U1",color="#ff8c61"]
-artifact_2 [label="A2\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
-artifact_3 [label="A1\nInt64",shape="ellipse",style="filled",color="#4a7c59",fillcolor="#8fc0a9"]
+artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A2 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A1 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
 
 unimplemented_1 -> artifact_2
 artifact_3 -> unimplemented_1

@@ -1,0 +1,12 @@
+digraph { layout=dot; compound=true; node [fontname="Helvetica"];
+provider_1 [shape="rectangle",label="P1",style="filled",color="#ff8c61",fillcolor="#faa275"]
+artifact_2 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A2 : Bar</TD></TR>
+<TR><TD ALIGN="LEFT" BGCOLOR="#F8F8F8" > + a : Int64</TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#EBEBEB" > + b : Foo</TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#F8F8F8" > + c : Core.SimpleVector</TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#EBEBEB" > + value : String</TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#F8F8F8" > + z : Any</TD></TR></TABLE>>,shape="plain",style="filled"]
+artifact_3 [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0" COLOR="#4a7c59">
+ <TR><TD BGCOLOR="#8fc0a9" ALIGN="CENTER">A1 : Int64</TD></TR>
+</TABLE>>,shape="plain",style="filled"]
+
+provider_1 -> artifact_2
+artifact_3 -> provider_1
+}
