@@ -1,4 +1,28 @@
+
+export visualize
+
+"""
+visualize(what, [format]; parameters...)
+
+Provides visualization in MIME `format` for `what`.
+`what` can be either provider or vector of providers
+If `format` is not specified then it is chosen automatically:
+* If `GrahpViz` package is not loaded then it is `MIME"text/vnd.graphviz"` which is a graphviz document.
+* If `GraphViz` package is loaded then it would be `MIME"image/svg+xml"` which is a .svg image.
+
+Load GraphViz in your REPL to have visualization as picture (automatically displayed in VScode).
+
+`parameters`:
+
+* `mod=Main` display names relative to that module
+* `show_struct_fields=True` display struct fields in the graph
+* `show_struct_fields_with_types=True` display types of struct fields in the graph
+"""
+function visualize end
+
 module Visualization
+
+import ..FunctionFusion: visualize
 
 using ..FunctionFusion:
     Artifact,
@@ -18,8 +42,6 @@ using ..FunctionFusion:
     artifact_type,
     is_artifact,
     is_provider
-
-export visualize
 struct NameShortener
     values::IdDict
     mod::Module
@@ -641,26 +663,6 @@ function render!(ctx::GraphBuilder, p::SwitchProvider; _...)
     end
     return id
 end
-
-
-"""
-visualize(what, [format]; parameters...)
-
-Provides visualization in MIME `format` for `what`.
-`what` can be either provider or vector of providers
-If `format` is not specified then it is chosen automatically:
-* If `GrahpViz` package is not loaded then it is `MIME"text/vnd.graphviz"` which is a graphviz document.
-* If `GraphViz` package is loaded then it would be `MIME"image/svg+xml"` which is a .svg image.
-
-Load GraphViz in your REPL to have visualization as picture (automatically displayed in VScode).
-
-`parameters`:
-
-* `mod=Main` display names relative to that module
-* `depth=Inf` display only `depth` nesting of the graph
-* `hide_types=False` hide types of the artifacts
-"""
-function visualize end
 
 function visualize(p, format::MIME"text/vnd.graphviz"; kvargs...)
     g = GraphBuilder(; kvargs...)

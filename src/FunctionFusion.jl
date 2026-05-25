@@ -11,7 +11,6 @@ export @artifact,
     @callback_provider,
     @switch_provider,
     substitute,
-    visualize,
     @audit_provider
 
 import Base
@@ -39,11 +38,8 @@ include("substitute.jl")
 
 include("implement.jl")
 
+include("audit.jl")
 
 include("visualization.jl")
-
-using .Visualization: visualize
-
-include("audit.jl")
 
 end # module FunctionFusion
